@@ -4,7 +4,7 @@
 
 ``FHNotifier`` tries to extend [FramelessHelper](https://github.com/wangwenx190/framelesshelper) with prebuilt widgets.
 
-- ``FHNotifier`` - toast-like notification to display a text for a short amount of time
+- ``FHNotifyWidget`` - toast-like notification to display a text for a short amount of time
 - ``FHMessageBox`` - message box to display info, warning or error
 
 Mainly needed for [Pawxel](https://pawxel.rocks), I thought, why not use it as an example of what is possible with FramelessHelper.
