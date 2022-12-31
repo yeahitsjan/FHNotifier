@@ -1,0 +1,4 @@
+[submodule "framelesshelper"]
+	path = framelesshelper
+	url = https://github.com/yeahitsjan/framelesshelper.git
+    branch = qmake_mods
