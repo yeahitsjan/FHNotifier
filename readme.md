@@ -1,5 +1,10 @@
 ## FHNotifier
 
+Works on:
+
+![qt5](https://img.shields.io/badge/qt5-5.14.x-brightgreen?style=flat-square)
+![qt6](https://img.shields.io/badge/qt6-with--changes-orange?style=flat-square)
+
 > **WARNING** - Currently not ready for production use! Code will change, break some things - or not.
 
 ``FHNotifier`` tries to extend [FramelessHelper](https://github.com/wangwenx190/framelesshelper) with prebuilt widgets.
@@ -11,7 +16,7 @@ Mainly needed for [Pawxel](https://pawxel.rocks), I thought, why not use it as a
 
 ### How to use
 
-Just include the ``FHNotifier.pri`` file or the relevant files from the ``FHNotifier/`` folder in your project. The files **do not** rely on each other.
+Just include the ``FHNotifier.pri`` file or the relevant files from the ``FHNotifier/`` folder in your project. Do not exclude ``FHNotifier.h`` as it is used in some files for theming. The classes itself **do not** rely on each other.
 
 **You don't need to pull the submodules, as this is just for testing purposes only. FHNotifier works with your already working FramelessHelper _installation_.**
 

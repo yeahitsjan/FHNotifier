@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#include "FHNotifier.h"
 #include "FHNotifyWidget.h"
 
 #include <QtGlobal>
@@ -30,46 +31,27 @@ SOFTWARE.
 #include <QTimer>
 
 FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *parent) : m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessWidget(parent) {
+    // FramelessWindowHint is enabled on Linux because I got a border around the window
+    // on some DEs (GNOME for example).
 #if defined(Q_OS_LINUX)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 #else
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
 #endif
-    this->setMinimumSize(QSize(175, 35));
-    this->setFixedSize(QSize(175, 35));
-
-    if (m_darkMode)
-        this->setStyleSheet("background-color: rgb(47, 47, 47);");
-    else
-        this->setStyleSheet("background-color: rgb(254, 254, 254);");
-
-    QVBoxLayout *_logic = new QVBoxLayout(this);
-    _logic->setSpacing(0);
-    _logic->setMargin(0);
-
-    m_timerBar = new QProgressBar(this);
-    {
-        m_timerBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        m_timerBar->setMaximumHeight(2);
-        m_timerBar->setMinimum(0);
-        m_timerBar->setMaximum(m_timespan);
-        m_timerBar->setTextVisible(false);
-        m_timerBar->setStyleSheet("QProgressBar { border: none; background: transparent; color: red; }"
-                                "QProgressBar:chunk { background-color: " + m_accentColor.name() + "; }");
-    }
-    _logic->addWidget(m_timerBar);
+    this->setMinimumSize(QSize(175, 30));
+    this->setFixedSize(QSize(175, 30));
+    // Set the palette of the widget according to the users choice.
+    this->setPalette(themePalette(m_accentColor, m_darkMode));
 
     if (!m_widgetLayout)
         m_widgetLayout = new QHBoxLayout;
-    m_widgetLayout->setSpacing(4);
+    // TODO: Qt6+ uses "setContentMargins"
+    m_widgetLayout->setSpacing(2);
     m_widgetLayout->setMargin(2);
 
     m_textLbl = new QLabel("Hello, World!", this);
     {
-        if (m_darkMode)
-            m_textLbl->setStyleSheet(m_textLbl->styleSheet() + "color: rgb(197, 197, 197);");
-        else
-            m_textLbl->setStyleSheet(m_textLbl->styleSheet() + "color: rgb(34, 34, 34);");
+        // The text itself should be the biggest and therefore central widget.
         m_textLbl->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     }
     m_widgetLayout->addWidget(m_textLbl);
@@ -77,19 +59,30 @@ FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *par
 
     m_closeBtn = new QPushButton(this);
     {
+        // On Windows we are going to use the included Segoe MDL2 Assets
+        // to get our close button back. On Linux there is no such font
+        // available on all platforms. Pawxel uses Google's Material Icons as
+        // a font. You'll need to install it first in order to use it.
+        // Pawxel includes Google's Material Iconfont in resources and installs it
+        // during launch just for the current session (not globally).
 #if defined(Q_OS_WINDOWS)
-        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 8));
+        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 7));
         m_closeBtn->setText("\uE8BB");
 #else
+        m_closeBtn->setFont(QFont("Material Icons Outlined", 7));
+        m_closeBtn->setText("\uE5CD");
 #endif
+        // Allow custom styling of the close button.
         m_closeBtn->setObjectName("FHNotifierCloseButton");
         m_closeBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         m_closeBtn->setFixedWidth(40);
+        connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
+            this->close();
+        });
     }
     m_widgetLayout->addWidget(m_closeBtn);
 
-    _logic->addLayout(m_widgetLayout);
-    this->setLayout(_logic);
+    this->setLayout(m_widgetLayout);
 }
 
 FHNotifyWidget::~FHNotifyWidget() {
@@ -102,19 +95,16 @@ void FHNotifyWidget::setNotificationText(const QString &_text) {
 
 void FHNotifyWidget::setTimespan(int _msec) {
     m_timespan = _msec;
-    m_timerBar->setMaximum(m_timespan);
-}
-
-void FHNotifyWidget::setWidgetFont(QFont _f) {
-    m_font = _f;
-    m_textLbl->setFont(m_font);
 }
 
 void FHNotifyWidget::notify() {
     if (m_timespan == 0) m_timespan = 3000;
     if (m_text.isEmpty()) m_textLbl->setText("Hello, World!");
-    m_timerBar->setValue(0);
-
     this->show();
-    // todo
+    // Thanks to Pence! But I still need to investigate this as I really would like
+    // to display a progressbar over it. singleShot is also not the ideal way as I understand
+    // Qt's timers & threads...
+    QTimer::singleShot(m_timespan, this, [=]() {
+        this->close();
+    });
 }

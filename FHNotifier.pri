@@ -1,3 +1,4 @@
 INCLUDEPATH += $$PWD
-HEADERS += $$PWD/FHNotifier/FHNotifyWidget.h
+HEADERS += $$PWD/FHNotifier/FHNotifier.h \
+            $$PWD/FHNotifier/FHNotifyWidget.h
 SOURCES += $$PWD/FHNotifier/FHNotifyWidget.cpp

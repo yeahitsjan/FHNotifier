@@ -41,17 +41,16 @@ public:
     FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *parent = nullptr);
     ~FHNotifyWidget();
 
-    // Set the text of the notify widget.
+    // Set the text to be displayed.
     void setNotificationText(const QString &_text);
     QString notificationText() { return m_text; }
 
-    // Set the timespan the notify widget is visible before it's closed. Default is 3000 (3 sec).
+    // Return the text holder widget.
+    QLabel* notificationTextLabel() { return m_textLbl; }
+
+    // Set the timespan the notification will be displayed. Default is 3000 (3sec).
     void setTimespan(int _msec);
     int timespan() { return m_timespan; }
-
-    // Apply a custom font to the full widget.
-    void setWidgetFont(QFont _f);
-    QFont widgetFont() { return m_font; }
 
 protected:
     QColor m_accentColor;
@@ -62,12 +61,11 @@ protected:
     QFont m_font;
 
     QPointer<QHBoxLayout> m_widgetLayout;
-    QProgressBar *m_timerBar;
     QLabel *m_textLbl;
     QPushButton *m_closeBtn;
 
 public slots:
-    // Display the notify widget with given timespan.
+    // Display the notify widget with given timespan (setTimespan).
     virtual void notify();
 };
 
