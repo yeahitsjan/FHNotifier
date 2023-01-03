@@ -66,10 +66,10 @@ FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *par
         // Pawxel includes Google's Material Iconfont in resources and installs it
         // during launch just for the current session (not globally).
 #if defined(Q_OS_WINDOWS)
-        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 7));
+        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 8));
         m_closeBtn->setText("\uE8BB");
 #else
-        m_closeBtn->setFont(QFont("Material Icons Outlined", 7));
+        m_closeBtn->setFont(QFont("Material Icons Outlined", 16));
         m_closeBtn->setText("\uE5CD");
 #endif
         // Allow custom styling of the close button.

@@ -5,6 +5,7 @@
 #include <QWidget>
 
 #include <FHNotifier/FHNotifyWidget.h>
+#include <FHNotifier/FHMessageBox.h>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -13,4 +14,5 @@ public:
     ~MainWindow();
 
     FHNotifyWidget *m_notifyWidget;
+    FHMessageBox *m_msgBox;
 };
