@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>style.qss</file>
+        <file>MaterialIconsOutlined-Regular.otf</file>
     </qresource>
 </RCC>

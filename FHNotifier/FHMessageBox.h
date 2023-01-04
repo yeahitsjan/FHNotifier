@@ -72,6 +72,9 @@ public:
     QPushButton* secondaryButton() { return m_secondBtn; }
     QPushButton* thirdButton() { return m_thirdBtn; }
 
+    // Set the font of all buttons at the same time.
+    void setButtonFont(QFont _f);
+
 protected:
     MessageBoxType m_type;
     MessageBoxIcon m_icon;
@@ -96,6 +99,15 @@ protected:
     QPushButton *m_secondBtn;
     QPushButton *m_thirdBtn;
     QList<QPushButton*> m_lBtns;
+
+signals:
+    // Catch the result of the messagebox.
+    // Catch if the user clicked on the first button.
+    void firstButtonClicked();
+    // Catch if the user clicked on the secondary button.
+    void secondaryButtonClicked();
+    // Catch if the user clicked on the third button.
+    void thirdButtonClicked();
 };
 
 #endif // __FHMessageBox_h__

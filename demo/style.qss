@@ -15,3 +15,30 @@
     background-color: rgba(125, 125, 125, 125);
     color: black;
 }
+
+#FHNotifierIconButton {
+    border: none;
+    background: none;
+    background-color: none;
+}
+
+#FHNotifierDecisionButton {
+    border: none;
+    padding: 4px;
+    color: rgb(43, 43, 43);
+    background-color: rgb(197, 197, 197);
+}
+
+#FHNotifierDecisionButton:hover {
+    background-color: rgb(47, 47, 47);
+    color: darkgray;
+}
+
+#FHNotifierDecisionButton:pressed {
+    background-color: rgb(125, 125, 125);
+    color: black;
+}
+
+#FHNotifierTitleBar {
+    background-color: rgba(197, 197, 197, 100);
+}

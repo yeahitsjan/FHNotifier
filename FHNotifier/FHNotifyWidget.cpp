@@ -47,7 +47,7 @@ FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *par
         m_widgetLayout = new QHBoxLayout;
     // TODO: Qt6+ uses "setContentMargins"
     m_widgetLayout->setSpacing(2);
-    m_widgetLayout->setMargin(2);
+    m_widgetLayout->setMargin(0);
 
     m_textLbl = new QLabel("Hello, World!", this);
     {

@@ -35,9 +35,9 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
 #if defined(Q_OS_LINUX)
     this->setWindowFlags(Qt::FramelessWindowHint);
 #endif
-    this->setMinimumSize(QSize(350, 210));
-    this->setMaximumSize(QSize(350, 210)); // without this the window is not set to the appropiate size? BIG TODO
-    this->setFixedSize(QSize(350, 210));
+    this->setMinimumSize(QSize(350, 175));
+    this->setMaximumSize(QSize(350, 175)); // without this the window is not set to the appropiate size? BIG TODO
+    this->setFixedSize(QSize(350, 175));
     this->setPalette(themePalette(m_accentColor, m_darkMode));
 
     if (!m_widgetLayout)
@@ -47,6 +47,7 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
 
     QWidget *_titleBar = new QWidget;
     {
+        _titleBar->setObjectName("FHNotifierTitleBar");
         _titleBar->setFixedHeight(38);
     }
     QHBoxLayout *_titleBarLayout = new QHBoxLayout;
@@ -79,9 +80,13 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
     m_widgetLayout->addWidget(_titleBar);
 
     QHBoxLayout *_contentLayout = new QHBoxLayout;
+    _contentLayout->setMargin(6);
     m_iconBtn = new QPushButton(this);
     {
         m_iconBtn->setObjectName("FHNotifierIconButton");
+        m_iconBtn->setFixedSize(QSize(72, 72));
+        // Here we will only use Google's Material Icons.
+        m_iconBtn->setFont(QFont("Material Icons Outlined", 32));
     }
     m_textLbl = new QLabel("Hello, World!", this);
     {
@@ -90,18 +95,35 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
     }
     _contentLayout->addWidget(m_iconBtn);
     _contentLayout->addWidget(m_textLbl);
-    _contentLayout->setAlignment(m_iconBtn, Qt::AlignHCenter);
     _contentLayout->setAlignment(m_textLbl, Qt::AlignHCenter);
     m_widgetLayout->addLayout(_contentLayout);
 
     m_lBtns.append( m_firstBtn = new QPushButton(this) );
+    {
+        connect(m_firstBtn, &QPushButton::clicked, this, [=]() {
+            emit firstButtonClicked();
+        });
+    }
     m_lBtns.append( m_secondBtn = new QPushButton(this) );
+    {
+        connect(m_secondBtn, &QPushButton::clicked, this, [=]() {
+            emit secondaryButtonClicked();
+        });
+    }
     m_lBtns.append( m_thirdBtn = new QPushButton(this) );
+    {
+        connect(m_thirdBtn, &QPushButton::clicked, this, [=]() {
+            emit thirdButtonClicked();
+        });
+    }
     foreach(QPushButton *_btn, m_lBtns) {
+        _btn->setMinimumSize(QSize(60, 26));
+        _btn->setObjectName("FHNotifierDecisionButton");
         _btn->hide();
     }
     
     QHBoxLayout *_buttonLayout = new QHBoxLayout;
+    _buttonLayout->setMargin(6);
     QWidget *_spacer = new QWidget;
     _spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     _buttonLayout->addWidget(_spacer);
@@ -137,10 +159,35 @@ FHMessageBox::~FHMessageBox() {
 }
 
 void FHMessageBox::setMessageBoxIcon(MessageBoxIcon _icon) {
+    m_icon = _icon;
+    switch (m_icon) {
+        case Information: {
+            m_iconBtn->setText("\uE88E");
+            m_iconBtn->setStyleSheet(m_iconBtn->styleSheet() + "color: #74d0f1;");
+        } break;
+        case Warning: {
+            m_iconBtn->setText("\uE002");
+            m_iconBtn->setStyleSheet(m_iconBtn->styleSheet() + "color: #ffef00;");
+        } break;
+        case Error: {
+            m_iconBtn->setText("\uE000");
+            m_iconBtn->setStyleSheet(m_iconBtn->styleSheet() + "color: #cd001a;");
+        } break;
+    }
 }
 
 void FHMessageBox::setMessageBoxTitle(const QString &_title) {
+    m_title = _title;
+    m_titleLbl->setText(m_title);
 }
 
 void FHMessageBox::setText(const QString &_text) {
+    m_text = _text;
+    m_textLbl->setText(m_text);
+}
+
+void FHMessageBox::setButtonFont(QFont _f) {
+    foreach(QPushButton *_btn, m_lBtns) {
+        _btn->setFont(_f);
+    }
 }
