@@ -63,13 +63,8 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
     m_closeBtn = new QPushButton(this);
     {
         m_closeBtn->setFixedSize(QSize(38, 38));
-#if defined(Q_OS_WINDOWS)
-        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 8));
-        m_closeBtn->setText("\uE8BB");
-#else
-        m_closeBtn->setFont(QFont("Material Icons Outlined", 16));
-        m_closeBtn->setText("\uE5CD");
-#endif
+        m_closeBtn->setFont(QFont(ICON_FONT, ICON_FONT_SIZE));
+        m_closeBtn->setText(CLOSE_POINT);
         m_closeBtn->setObjectName("FHNotifierCloseButton");
         connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
             this->close();

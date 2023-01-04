@@ -23,6 +23,22 @@ SOFTWARE.
 #include <QPalette>
 #include <QColor>
 
+// On Windows we are going to use the included Segoe MDL2 Assets to get our
+// close button. On Linux there is no such font and you can't just pack MDL2 with
+// it due to licensing issues with Microsoft. Pawxel uses Google's Material Icons as
+// a font. You'll need to install it first in order to use it. Pawxel includes Google's
+// Material iconfont in resources and installs it during launch just for the current session.
+// You can also change the iconfont by also changing the codepoints.
+#if defined(Q_OS_WINDOWS)
+#define ICON_FONT "Segoe MDL2 Assets"
+#define ICON_FONT_SIZE 8
+#define CLOSE_POINT "\uE8BB"
+#else
+#define ICON_FONT "Material Icons Outlined"
+#define ICON_FONT_SIZE 16
+#define CLOSE_POINT "\uE5CD"
+#endif
+
 inline QPalette themePalette(QColor _accentColor, bool _darkMode) {
     QPalette pal;
     if (_darkMode) {

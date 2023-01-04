@@ -59,19 +59,8 @@ FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *par
 
     m_closeBtn = new QPushButton(this);
     {
-        // On Windows we are going to use the included Segoe MDL2 Assets
-        // to get our close button back. On Linux there is no such font
-        // available on all platforms. Pawxel uses Google's Material Icons as
-        // a font. You'll need to install it first in order to use it.
-        // Pawxel includes Google's Material Iconfont in resources and installs it
-        // during launch just for the current session (not globally).
-#if defined(Q_OS_WINDOWS)
-        m_closeBtn->setFont(QFont("Segoe MDL2 Assets", 8));
-        m_closeBtn->setText("\uE8BB");
-#else
-        m_closeBtn->setFont(QFont("Material Icons Outlined", 16));
-        m_closeBtn->setText("\uE5CD");
-#endif
+        m_closeBtn->setFont(QFont(ICON_FONT, ICON_FONT_SIZE));
+        m_closeBtn->setText(CLOSE_POINT);
         // Allow custom styling of the close button.
         m_closeBtn->setObjectName("FHNotifierCloseButton");
         m_closeBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
