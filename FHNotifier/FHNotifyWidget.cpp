@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include <QTimer>
 
-FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *parent) : m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessWidget(parent) {
+FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *parent) : m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessDialog(parent) {
     // FramelessWindowHint is enabled on Linux because I got a border around the window
     // on some DEs (GNOME for example).
 #if defined(Q_OS_LINUX)

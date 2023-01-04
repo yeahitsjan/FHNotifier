@@ -31,12 +31,14 @@ SOFTWARE.
 #include <QHBoxLayout>
 
 FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _darkMode, QWidget *parent)
-            : m_type(_type), m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessWidget(parent) {
+            : m_type(_type), m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessDialog(parent) {
 #if defined(Q_OS_LINUX)
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+#else
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
 #endif
+    // For now let's keep this size as default.
     this->setMinimumSize(QSize(350, 175));
-    this->setMaximumSize(QSize(350, 175)); // without this the window is not set to the appropiate size? BIG TODO
     this->setFixedSize(QSize(350, 175));
     this->setPalette(themePalette(m_accentColor, m_darkMode));
 
@@ -124,13 +126,17 @@ FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _dark
     
     QHBoxLayout *_buttonLayout = new QHBoxLayout;
     _buttonLayout->setMargin(6);
+    // Fill up space until the buttons are displayed.
     QWidget *_spacer = new QWidget;
     _spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     _buttonLayout->addWidget(_spacer);
-    // todo: edit boilerplate below, better structuring
+    // Change layout based on messagebox type.
     if (m_type == MessageBoxType::Ok) {
+        // Set text.
         m_firstBtn->setText(tr("Ok"));
+        // Show the button.
         m_firstBtn->show();
+        // Add to the layout.
         _buttonLayout->addWidget(m_firstBtn);
     } else if (m_type == MessageBoxType::YesNo) {
         m_firstBtn->setText(tr("Yes"));

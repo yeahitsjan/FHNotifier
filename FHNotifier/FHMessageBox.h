@@ -23,7 +23,7 @@ SOFTWARE.
 #ifndef __FHMessageBox_h__
 #define __FHMessageBox_h__
 
-#include <FramelessWidget>
+#include <FramelessDialog>
 #include <QObject>
 
 #include <QPointer>
@@ -35,7 +35,7 @@ SOFTWARE.
 
 FRAMELESSHELPER_USE_NAMESPACE
 
-class FHMessageBox : public FramelessWidget {
+class FHMessageBox : public FramelessDialog {
     Q_OBJECT
 public:
     enum MessageBoxType {

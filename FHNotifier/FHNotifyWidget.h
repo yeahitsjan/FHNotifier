@@ -23,7 +23,7 @@ SOFTWARE.
 #ifndef __FHNotifyWidget_h__
 #define __FHNotifyWidget_h__
 
-#include <FramelessWidget>
+#include <FramelessDialog>
 #include <QObject>
 
 #include <QPointer>
@@ -35,7 +35,7 @@ SOFTWARE.
 
 FRAMELESSHELPER_USE_NAMESPACE
 
-class FHNotifyWidget : public FramelessWidget {
+class FHNotifyWidget : public FramelessDialog {
     Q_OBJECT
 public:
     FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *parent = nullptr);
