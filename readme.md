@@ -20,6 +20,30 @@ Just include the ``FHNotifier.pri`` file or the relevant files from the ``FHNoti
 
 **You don't need to pull the submodules, as this is just for testing purposes only. FHNotifier works with your already working FramelessHelper _installation_.**
 
+### Example
+
+This is an Example, how FHNotifier is used inside Pawxel:
+```cpp
+#include <FHNotifier/FHMessageBox.h>
+
+void Application::onPrefChangeRestartRequired() {
+    if (!m_restartMsgBox)
+        m_restartMsgBox = new FHMessageBox(FHMessageBox::Ok, m_accentColor, m_shouldAppsUseDarkMode);
+    m_restartMsgBox->setMessageBoxTitle(tr("Restart required"));
+    m_restartMsgBox->setText(tr("A restart is required for these changes to take some effect."));
+    m_restartMsgBox->setMessageBoxIcon(FHMessageBox::Warning);
+    {
+        m_restartMsgBox->titleWidget()->setFont(QFont("Josefin Sans Bold", 9));
+        m_restartMsgBox->textWidget()->setFont(QFont("Josefin Sans", 9));
+        m_restartMsgBox->setButtonFont(QFont("Josefin Sans", 9));
+    }
+    connect(m_restartMsgBox, &FHMessageBox::firstButtonClicked, this, [=]() {
+        m_restartMsgBox->close();
+    });
+    m_restartMsgBox->show();
+}
+```
+
 ### Run the demo
 
 If you want to run the demo, fire up a terminal:
