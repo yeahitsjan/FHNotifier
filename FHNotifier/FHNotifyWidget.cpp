@@ -82,6 +82,11 @@ void FHNotifyWidget::setNotificationText(const QString &_text) {
     m_textLbl->setText(m_text);
 }
 
+void FHNotifyWidget::setCloseButtonDisabled() {
+    m_widgetLayout->removeWidget(m_closeBtn);
+    m_closeBtn->hide();
+}
+
 void FHNotifyWidget::setTimespan(int _msec) {
     m_timespan = _msec;
 }

@@ -45,8 +45,11 @@ public:
     void setNotificationText(const QString &_text);
     QString notificationText() { return m_text; }
 
+    // Disable the close button of the notification.
+    void setCloseButtonDisabled();
+
     // Return the text holder widget.
-    QLabel* notificationTextLabel() { return m_textLbl; }
+    QLabel* notificationTextLabel() { return m_textLbl; };
 
     // Set the timespan the notification will be displayed. Default is 3000 (3sec).
     void setTimespan(int _msec);

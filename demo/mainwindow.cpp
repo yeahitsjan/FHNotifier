@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         m_notifyWidget->setNotificationText("Color #5CA6 copied to clipboard");
         m_notifyWidget->setFixedWidth(250); // resize, let's find another way, default is 175x30
         m_notifyWidget->setTimespan(3500);
-        m_notifyWidget->setWindowOpacity(0.6);
+        m_notifyWidget->setCloseButtonDisabled();
         m_notifyWidget->notificationTextLabel()->setFont(QFont("Bahnschrift Semilight", 10));
         connect(_notifyWidgetTest, &QPushButton::clicked, m_notifyWidget, &FHNotifyWidget::notify);
     }
