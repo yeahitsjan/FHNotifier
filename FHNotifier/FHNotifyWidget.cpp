@@ -38,6 +38,7 @@ FHNotifyWidget::FHNotifyWidget(QColor _accentColor, bool _darkMode, QWidget *par
 #else
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
 #endif
+    this->setAttribute(Qt::WA_DeleteOnClose);
     this->setMinimumSize(QSize(175, 30));
     this->setFixedSize(QSize(175, 30));
     // Set the palette of the widget according to the users choice.

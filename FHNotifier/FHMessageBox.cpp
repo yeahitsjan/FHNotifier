@@ -33,10 +33,11 @@ SOFTWARE.
 FHMessageBox::FHMessageBox(MessageBoxType _type, QColor _accentColor, bool _darkMode, QWidget *parent)
             : m_type(_type), m_accentColor(_accentColor), m_darkMode(_darkMode), FramelessDialog(parent) {
 #if defined(Q_OS_LINUX)
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 #else
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
 #endif
+    this->setAttribute(Qt::WA_DeleteOnClose);
     // For now let's keep this size as default.
     this->setMinimumSize(QSize(350, 175));
     this->setFixedSize(QSize(350, 175));
